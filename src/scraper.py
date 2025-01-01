@@ -22,7 +22,18 @@ class CelticsScraper:
             player_stats = box_score.get_data_frames()[0]
             
             # Filter for Celtics players only
-            celtics_stats = player_stats[player_stats['TEAM_ID'] == self.celtics_id]
+            celtics_stats = player_stats[player_stats['TEAM_ID'] == self.celtics_id].copy()
+            
+            # Keep only columns that exist in the database schema
+            valid_columns = [
+                'GAME_ID', 'TEAM_ID', 'TEAM_ABBREVIATION', 'TEAM_CITY', 
+                'PLAYER_ID', 'PLAYER_NAME', 'MIN', 'FGM', 'FGA', 'FG_PCT', 
+                'FG3M', 'FG3A', 'FG3_PCT', 'FTM', 'FTA', 'FT_PCT', 
+                'REB', 'AST', 'STL', 'BLK', 'PTS', 'PLUS_MINUS'
+            ]
+            
+            # Select only valid columns
+            celtics_stats = celtics_stats[valid_columns]
             
             # Add timestamp
             celtics_stats['SCRAPE_TIMESTAMP'] = datetime.now()

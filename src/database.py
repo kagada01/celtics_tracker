@@ -1,10 +1,13 @@
 import sqlite3
 import pandas as pd
+import os
 from datetime import datetime
 
 class CelticsDB:
     def __init__(self, db_path='data/celtics.db'):
-        self.db_path = db_path
+        # Ensure full path is used and directory exists
+        self.db_path = os.path.abspath(db_path)
+        os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
         self.initialize_db()
     
     def initialize_db(self):
@@ -15,6 +18,9 @@ class CelticsDB:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS game_stats (
                 GAME_ID TEXT,
+                TEAM_ID INTEGER,
+                TEAM_ABBREVIATION TEXT,
+                TEAM_CITY TEXT,
                 PLAYER_ID INTEGER,
                 PLAYER_NAME TEXT,
                 MIN TEXT,
