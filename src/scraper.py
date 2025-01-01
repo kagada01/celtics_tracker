@@ -9,7 +9,7 @@ class CelticsScraper:
         self.celtics_id = [team for team in teams.get_teams() 
                           if team['full_name'] == 'Boston Celtics'][0]['id']
         
-    def get_game_ids(self, season='2023-24'):
+    def get_game_ids(self, season='2024-25'):
         """Get all game IDs for the specified season"""
         game_log = TeamGameLog(team_id=self.celtics_id, season=season)
         games_df = game_log.get_data_frames()[0]
@@ -44,7 +44,7 @@ class CelticsScraper:
             print(f"Error fetching game {game_id}: {str(e)}")
             return None
 
-    def get_season_stats(self, season='2023-24'):
+    def get_season_stats(self, season='2024-25'):
         """Get all game stats for the specified season"""
         game_ids = self.get_game_ids(season)
         all_stats = []
